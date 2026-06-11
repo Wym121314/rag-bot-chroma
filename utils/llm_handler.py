@@ -33,7 +33,7 @@ CAR_MANUAL_USER_PROMPT = """以下是产品手册的相关段落：
 
 {context}
 
-用户的问题是：{input}
+{chat_history}用户的问题是：{input}
 
 请根据以上文档内容回答。如有数据，请引用具体数值和来源页码。"""
 

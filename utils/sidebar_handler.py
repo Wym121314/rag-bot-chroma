@@ -123,6 +123,14 @@ def sidebar_utilities():
   """
   Displays reset, clear, and undo options in an expander for user convenience.
   """
+  # Conversation memory toggle
+  st.toggle(
+    "🧠 对话记忆",
+    value=st.session_state.get("enable_memory", True),
+    key="enable_memory",
+    help="开启后 AI 能理解追问和上下文，关闭则每次独立回答"
+  )
+
   with st.expander("🛠️ Utilities", expanded=False):
     col1, col2, col3 = st.columns(3)
 

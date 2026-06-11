@@ -29,7 +29,8 @@ def setup_session_state():
     "pdf_files": [],                # Currently submitted PDF files
     "last_provider": None,          # Tracks last selected provider for dynamic reloading
     "unsubmitted_files": False,     # Tracks whether new files were uploaded but not submitted
-    "uploader_key": 0               # Used to reset file_uploader widget
+    "uploader_key": 0,              # Used to reset file_uploader widget
+    "enable_memory": True           # Toggle for multi-turn conversation memory
   }.items():
     if key not in st.session_state:
       st.session_state[key] = default
@@ -44,9 +45,35 @@ def render_chat_history():
     with st.chat_message("ai"):
       st.markdown(a)
 
+def format_chat_history(history, max_turns=5):
+  """
+  Formats recent chat history into a string for the LLM prompt.
+
+  Takes the last N turns and converts them into a readable format
+  so the LLM can understand the conversation context.
+
+  Parameters:
+  - history (list): List of (question, answer, ...) tuples
+  - max_turns (int): Maximum number of recent turns to include
+
+  Returns:
+  - str: Formatted chat history string, or empty string if no history
+  """
+  if not history:
+    return ""
+
+  recent = history[-max_turns:]
+  lines = []
+  for q, a, *_ in recent:
+    lines.append(f"用户问：{q}")
+    lines.append(f"助手答：{a}")
+
+  return "以下是之前的对话记录，请参考上下文理解用户的追问：\n" + "\n".join(lines) + "\n\n"
+
+
 def handle_user_input(model_provider, model, chain):
   """
-  Handles user input from the chat input box. 
+  Handles user input from the chat input box.
   Invokes the LLM chain using the provided question and displays the result.
 
   Parameters:
@@ -74,7 +101,14 @@ def handle_user_input(model_provider, model, chain):
   with st.chat_message("ai"):
     with st.spinner("Thinking..."):
       try:
-        output = chain.invoke({"input": question})["answer"]
+        # Build chain input with optional chat history
+        chain_input = {"input": question}
+
+        if st.session_state.get("enable_memory", False):
+          chat_history = format_chat_history(st.session_state.chat_history)
+          chain_input["chat_history"] = chat_history
+
+        output = chain.invoke(chain_input)["answer"]
         st.markdown(output)
         pdf_names = [f.name for f in st.session_state.get("pdf_files")]
         st.session_state.chat_history.append((question, output, model_provider, model, pdf_names, datetime.now()))
