@@ -25,3 +25,6 @@ streamlit
 python-dotenv
 jieba
 openpyxl
+
+# Testing
+pytest
