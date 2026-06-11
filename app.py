@@ -28,9 +28,9 @@ def main():
   - Renders chat interface and handles user questions
   - Allows downloading chat history
   """
-  st.set_page_config(page_title="RAG PDFBot", layout="centered")
-  st.title("👽 RAG PDFBot")
-  st.caption("Chat with multiple PDFs :books:")
+  st.set_page_config(page_title="🚗 汽车手册智能问答", layout="centered")
+  st.title("🚗 新能源汽车产品手册智能问答系统")
+  st.caption("基于 RAG 技术，用自然语言查询车型产品手册 📚")
 
   # Initialize required Streamlit session state variables
   setup_session_state()

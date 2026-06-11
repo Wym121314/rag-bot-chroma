@@ -1,9 +1,27 @@
-gradio
-chromadb
+# Core framework
+langchain
+langchain-core
+langchain-classic
 langchain-community
-sentence-transformers
+langchain-text-splitters
+
+# LLM providers
 langchain-groq
 langchain-google-genai
+langchain-openai
+langchain-ollama
+
+# Vector store & embeddings
+chromadb
+sentence-transformers
+
+# PDF parsing
 pypdf
-python-dotenv
+
+# UI
 streamlit
+
+# Utilities
+python-dotenv
+jieba
+openpyxl

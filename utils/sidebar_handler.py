@@ -52,7 +52,7 @@ def render_upload_files_button():
   - submitted (bool): True if the user clicked the submit button
   """
   uploaded_files = st.file_uploader(
-    "📚 Upload PDFs",
+    "📚 上传车型手册 PDF",
     type=["pdf"],
     accept_multiple_files=True,
     disabled=(not st.session_state.get("model")),
