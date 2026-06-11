@@ -77,7 +77,7 @@ def get_or_create_vectorstore(uploaded_files, model_provider):
     # Chunk the raw text for embedding
     chunks = get_text_chunks(raw_text)
 
-    print(f"📄 提取文本: {len(raw_text)} 字符 → 分割为 {len(chunks)} 个文本块")
+    print(f"[PDF] 提取文本: {len(raw_text)} 字符 -> 分割为 {len(chunks)} 个文本块")
 
     # Load the appropriate embedding model
     embedding = get_embeddings(model_provider)
@@ -90,14 +90,14 @@ def get_or_create_vectorstore(uploaded_files, model_provider):
 
     # If the vectorstore directory exists and is not empty, load and append
     if os.path.exists(persist_path) and os.listdir(persist_path):
-        print(f"📂 加载已有向量库: {persist_path}")
+        print(f"[DB] 加载已有向量库: {persist_path}")
         vectorstore = Chroma(
             persist_directory=persist_path,
             embedding_function=embedding
         )
         vectorstore.add_texts(chunks)
     else:
-        print(f"🆕 创建新向量库: {persist_path}")
+        print(f"[DB] 创建新向量库: {persist_path}")
         vectorstore = Chroma.from_texts(
             texts=chunks,
             embedding=embedding,
