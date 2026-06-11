@@ -1,0 +1,9 @@
+# 构建镜像时排除这些文件（减小体积、保护隐私）
+venv/
+.git/
+.env
+data/
+__pycache__/
+*.pyc
+*.pyo
+assets/

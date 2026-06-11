@@ -80,6 +80,20 @@ pip3 install -r requirements.txt
 
 ---
 
+## 🐳 Docker (一键部署)
+
+```bash
+# 1. 先创建 .env 文件（见下方 API Keys 部分）
+# 2. 一键启动
+docker-compose up --build
+
+# 3. 浏览器打开 http://localhost:8501
+```
+
+停止服务：`docker-compose down`
+
+---
+
 ## 🔐 API Keys Required
 
 - **Groq API key** from [console.groq.com](https://console.groq.com/)
@@ -114,6 +128,9 @@ streamlit run app.py
 ```
 .
 ├── app.py                        # Main app logic
+├── Dockerfile                    # Docker image definition
+├── docker-compose.yml            # One-click deployment
+├── .dockerignore                 # Docker build exclusions
 ├── utils/
 │   ├── chat_handler.py          # Handles chat, input, history, downloads
 │   ├── sidebar_handler.py       # Handles sidebar config, upload, utilities
